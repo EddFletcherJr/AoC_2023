@@ -1,0 +1,10 @@
+C:\Users\EddFletcher\source\repos\AdventOfCode2023\AdventOfCode2023\obj\Debug\AdventOfCode2023.csprojAssemblyReference.cache
+C:\Users\EddFletcher\source\repos\AdventOfCode2023\AdventOfCode2023\obj\Debug\AdventOfCode2023.Form1.resources
+C:\Users\EddFletcher\source\repos\AdventOfCode2023\AdventOfCode2023\obj\Debug\AdventOfCode2023.Properties.Resources.resources
+C:\Users\EddFletcher\source\repos\AdventOfCode2023\AdventOfCode2023\obj\Debug\AdventOfCode2023.csproj.GenerateResource.cache
+C:\Users\EddFletcher\source\repos\AdventOfCode2023\AdventOfCode2023\obj\Debug\AdventOfCode2023.csproj.CoreCompileInputs.cache
+C:\Users\EddFletcher\source\repos\AdventOfCode2023\AdventOfCode2023\bin\Debug\AdventOfCode2023.exe.config
+C:\Users\EddFletcher\source\repos\AdventOfCode2023\AdventOfCode2023\bin\Debug\AdventOfCode2023.exe
+C:\Users\EddFletcher\source\repos\AdventOfCode2023\AdventOfCode2023\bin\Debug\AdventOfCode2023.pdb
+C:\Users\EddFletcher\source\repos\AdventOfCode2023\AdventOfCode2023\obj\Debug\AdventOfCode2023.exe
+C:\Users\EddFletcher\source\repos\AdventOfCode2023\AdventOfCode2023\obj\Debug\AdventOfCode2023.pdb
