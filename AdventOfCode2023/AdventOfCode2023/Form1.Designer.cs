@@ -126,6 +126,7 @@
             this.Day32Btn.TabIndex = 9;
             this.Day32Btn.Text = "Day 3-2";
             this.Day32Btn.UseVisualStyleBackColor = true;
+            this.Day32Btn.Click += new System.EventHandler(this.Day32Btn_Click);
             // 
             // Day31Btn
             // 

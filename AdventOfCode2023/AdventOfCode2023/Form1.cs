@@ -421,5 +421,112 @@ namespace AdventOfCode2023
                 MessageBox.Show($"Finished: {total}");
             }
         }
+
+        private void Day32Btn_Click(object sender, EventArgs e)
+        {
+            int total = 0;
+
+            String input = InputTxtbox.Text;
+            OutputTxtBox.Text = "";
+
+            //<symbol or number, x, y>
+            List<Tuple<String, int, int>> symbols = new List<Tuple<String, int, int>>();
+            List<Tuple<String, int, int>> numbers = new List<Tuple<String, int, int>>();
+            String curNum = "";
+            int i_num = -1;
+            int j_num = -1;
+
+            if (String.IsNullOrEmpty(input))
+                MessageBox.Show("Input is Missing");
+            else
+            {
+                //search input and store x,y indexes of everything that is not a number or "."
+                String[] lines = input.Split('\n');
+
+                for (int i = 0; i < lines.Length; i++)
+                {
+                    String curLine = lines[i];
+                    for (int j = 0; j < curLine.Length; j++)
+                    {
+                        char curChar = curLine[j];
+
+                        //if it is symbol
+                        if (Regex.IsMatch(curChar.ToString(), @"[^\d]"))
+                        {
+                            if (curNum != "")
+                            {
+                                numbers.Add(new Tuple<string, int, int>(curNum, i_num, j_num));
+                                i_num = -1;
+                                j_num = -1;
+                                curNum = "";
+                            }
+                            if (curChar != '.')
+                                symbols.Add(new Tuple<string, int, int>(curChar.ToString(), i, j));
+                        }
+                        //if it is a number
+                        else
+                        {
+                            if (i_num == -1) i_num = i;
+                            if (j_num == -1) j_num = j;
+
+                            curNum += curChar.ToString();
+                        }
+                    }
+
+                    //handle scenario for end of input number
+                    if (curNum != "")
+                    {
+                        numbers.Add(new Tuple<string, int, int>(curNum, i_num, j_num));
+                        i_num = -1;
+                        j_num = -1;
+                        curNum = "";
+                    }
+                }
+
+                //check to see if each number is adjacent to any symbols
+                foreach (Tuple<String, int, int> symbol in symbols)
+                {
+                    int symX = symbol.Item2;
+                    int symY = symbol.Item3;
+                    int adjacentNum1 = -1;
+                    int adjacentNum2 = -1;
+                    int adjacentCount = 0;
+
+                    foreach (Tuple<String, int, int> number in numbers)
+                    {
+                        int numX = number.Item2;
+                        int numY = number.Item3;
+                        int numLength = number.Item1.Length;
+
+                        if (Math.Abs(numX - symX) <= 1)
+                        {
+                            for (int i = 0; i < numLength; i++)
+                            {
+                                if (Math.Abs(numY + i - symY) <= 1)
+                                {
+                                    if(adjacentNum1 == -1) adjacentNum1 = int.Parse(number.Item1);
+                                    else if(adjacentNum2 == -1) adjacentNum2 = int.Parse(number.Item1);
+
+                                    adjacentCount ++;
+                                    break;
+                                }
+                            }
+                        }
+                        if (adjacentCount == 2)
+                        {
+                            total += adjacentNum1 * adjacentNum2;
+                            break;
+                        }
+                    }
+                }
+
+                OutputTxtBox.Text += $"Numbers Found: {numbers.Count()}{Environment.NewLine}Symbols Found: {symbols.Count()}{Environment.NewLine}Result: {total.ToString()}";
+
+                OutputTxtBox.SelectionStart = OutputTxtBox.Text.Length;
+                OutputTxtBox.ScrollToCaret();
+
+                MessageBox.Show($"Finished: {total}");
+            }
+        }
     }
 }
