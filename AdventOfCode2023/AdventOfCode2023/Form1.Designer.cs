@@ -36,6 +36,8 @@
             this.Day12Btn = new System.Windows.Forms.Button();
             this.Day22btn = new System.Windows.Forms.Button();
             this.Day21Btn = new System.Windows.Forms.Button();
+            this.Day32Btn = new System.Windows.Forms.Button();
+            this.Day31Btn = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // InputTxtbox
@@ -116,11 +118,32 @@
             this.Day21Btn.UseVisualStyleBackColor = true;
             this.Day21Btn.Click += new System.EventHandler(this.Day21Btn_Click);
             // 
+            // Day32Btn
+            // 
+            this.Day32Btn.Location = new System.Drawing.Point(361, 77);
+            this.Day32Btn.Name = "Day32Btn";
+            this.Day32Btn.Size = new System.Drawing.Size(60, 23);
+            this.Day32Btn.TabIndex = 9;
+            this.Day32Btn.Text = "Day 3-2";
+            this.Day32Btn.UseVisualStyleBackColor = true;
+            // 
+            // Day31Btn
+            // 
+            this.Day31Btn.Location = new System.Drawing.Point(310, 77);
+            this.Day31Btn.Name = "Day31Btn";
+            this.Day31Btn.Size = new System.Drawing.Size(60, 23);
+            this.Day31Btn.TabIndex = 8;
+            this.Day31Btn.Text = "Day 3-1";
+            this.Day31Btn.UseVisualStyleBackColor = true;
+            this.Day31Btn.Click += new System.EventHandler(this.Day31Btn_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
+            this.Controls.Add(this.Day32Btn);
+            this.Controls.Add(this.Day31Btn);
             this.Controls.Add(this.Day22btn);
             this.Controls.Add(this.Day21Btn);
             this.Controls.Add(this.Day12Btn);
@@ -146,6 +169,8 @@
         private System.Windows.Forms.Button Day12Btn;
         private System.Windows.Forms.Button Day22btn;
         private System.Windows.Forms.Button Day21Btn;
+        private System.Windows.Forms.Button Day32Btn;
+        private System.Windows.Forms.Button Day31Btn;
     }
 }
 
