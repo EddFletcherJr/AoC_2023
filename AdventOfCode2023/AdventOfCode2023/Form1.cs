@@ -253,9 +253,6 @@ namespace AdventOfCode2023
         private void Day22btn_Click(object sender, EventArgs e)
         {
             int total = 0;
-            int redLimit = 12;
-            int greenLimit = 13;
-            int blueLimit = 14;
 
             String input = InputTxtbox.Text;
             OutputTxtBox.Text = "";
@@ -526,6 +523,136 @@ namespace AdventOfCode2023
                 OutputTxtBox.ScrollToCaret();
 
                 MessageBox.Show($"Finished: {total}");
+            }
+        }
+
+        private void Day41Btn_Click(object sender, EventArgs e)
+        {
+            int total = 0;
+
+            String input = InputTxtbox.Text;
+            OutputTxtBox.Text = "";
+
+            if (String.IsNullOrEmpty(input))
+                MessageBox.Show("Input is Missing");
+            else
+            {
+                //search input and store x,y indexes of everything that is not a number or "."
+                String[] lines = input.Split('\n');
+
+                foreach(String tmp in lines)
+                {
+                    String line = tmp;
+                    String[] splitStr = line.Split('|');
+                    String[] winningNumbers = splitStr[0].Split(':')[1].Trim().Replace("  ", " ").Split(' ');
+                    String[] cardNumbers = splitStr[1].Trim().Replace("  "," ").Split(' ');
+                    int cardScore = 0;
+
+                    foreach (String number in cardNumbers)
+                    {
+                        if (winningNumbers.Contains(number))
+                        {
+                            if (cardScore == 0)
+                                cardScore++;
+                            else
+                                cardScore = cardScore * 2;
+                        }
+                    }
+                    total += cardScore;
+                }
+            }
+
+            OutputTxtBox.Text += $"Result: {total.ToString()}";
+
+            OutputTxtBox.SelectionStart = OutputTxtBox.Text.Length;
+            OutputTxtBox.ScrollToCaret();
+
+            MessageBox.Show($"Finished: {total}");
+        }
+
+        public class Card
+        {
+            public String input { get; set; }
+            public int cardSeq { get; set; }
+            public String[] winningNumbers { get; set; }
+            public String[] cardNumbers { get; set; }
+            public int winningNumbersCount { get; set; } = 0;
+            public int instances { get; set; } = 1;
+        }
+
+        private void Day42Btn_Click(object sender, EventArgs e)
+        {
+            int total = 0;
+
+            String input = InputTxtbox.Text;
+            OutputTxtBox.Text = "";
+
+            if (String.IsNullOrEmpty(input))
+                MessageBox.Show("Input is Missing");
+            else
+            {
+                //search input and store x,y indexes of everything that is not a number or "."
+                String[] lines = input.Split('\n');
+                List<Card> cards = new List<Card>();
+                int cardSeq = 0;
+
+                foreach (String tmp in lines)
+                {
+                    String line = tmp;
+                    String[] splitStr = line.Split('|');
+                    String[] winningNumbers = splitStr[0].Split(':')[1].Trim().Replace("  ", " ").Split(' ');
+                    String[] cardNumbers = splitStr[1].Trim().Replace("  ", " ").Split(' ');
+                    int winningNumbersCount = 0;
+                    cardSeq++;
+
+                    foreach (String number in cardNumbers)
+                    {
+                        if (winningNumbers.Contains(number))
+                        {
+                            winningNumbersCount++;
+                        }
+                    }
+
+                    Card curCard = new Card { };
+                    curCard.input = input;
+                    curCard.cardSeq = cardSeq;
+                    curCard.winningNumbers = winningNumbers;
+                    curCard.cardNumbers = cardNumbers;
+                    curCard.winningNumbersCount = winningNumbersCount;
+
+                    cards.Add(curCard);
+                }
+
+                //loop through cards to see what needs to be copied
+                foreach(Card card in cards)
+                {
+                    //recursive function needed because of the indeterminate number of nested levels
+                    ProcessCardInstances(card, cards);
+                }
+
+                total = cards.Sum(c => c.instances);
+            }
+
+            OutputTxtBox.Text += $"Result: {total.ToString()}";
+
+            OutputTxtBox.SelectionStart = OutputTxtBox.Text.Length;
+            OutputTxtBox.ScrollToCaret();
+
+            MessageBox.Show($"Finished: {total}");
+        }
+
+        private void ProcessCardInstances(Card card, List<Card> cards)
+        {
+            int startIndex = card.cardSeq;
+            int endIndex = startIndex + card.winningNumbersCount;
+
+            for (int i = startIndex; i < endIndex; i++)
+            {
+                if (i < cards.Count)
+                {
+                    cards[i].instances++;
+                    ProcessCardInstances(cards[i], cards); // Recursively process child cards
+                }
             }
         }
     }

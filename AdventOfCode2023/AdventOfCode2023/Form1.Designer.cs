@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
             this.InputTxtbox = new System.Windows.Forms.RichTextBox();
             this.label1 = new System.Windows.Forms.Label();
             this.OutputTxtBox = new System.Windows.Forms.RichTextBox();
@@ -38,6 +39,8 @@
             this.Day21Btn = new System.Windows.Forms.Button();
             this.Day32Btn = new System.Windows.Forms.Button();
             this.Day31Btn = new System.Windows.Forms.Button();
+            this.Day42Btn = new System.Windows.Forms.Button();
+            this.Day41Btn = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // InputTxtbox
@@ -48,7 +51,7 @@
             this.InputTxtbox.Name = "InputTxtbox";
             this.InputTxtbox.Size = new System.Drawing.Size(289, 413);
             this.InputTxtbox.TabIndex = 0;
-            this.InputTxtbox.Text = "";
+            this.InputTxtbox.Text = resources.GetString("InputTxtbox.Text");
             // 
             // label1
             // 
@@ -138,11 +141,33 @@
             this.Day31Btn.UseVisualStyleBackColor = true;
             this.Day31Btn.Click += new System.EventHandler(this.Day31Btn_Click);
             // 
+            // Day42Btn
+            // 
+            this.Day42Btn.Location = new System.Drawing.Point(361, 103);
+            this.Day42Btn.Name = "Day42Btn";
+            this.Day42Btn.Size = new System.Drawing.Size(60, 23);
+            this.Day42Btn.TabIndex = 11;
+            this.Day42Btn.Text = "Day 4-2";
+            this.Day42Btn.UseVisualStyleBackColor = true;
+            this.Day42Btn.Click += new System.EventHandler(this.Day42Btn_Click);
+            // 
+            // Day41Btn
+            // 
+            this.Day41Btn.Location = new System.Drawing.Point(310, 103);
+            this.Day41Btn.Name = "Day41Btn";
+            this.Day41Btn.Size = new System.Drawing.Size(60, 23);
+            this.Day41Btn.TabIndex = 10;
+            this.Day41Btn.Text = "Day 4-1";
+            this.Day41Btn.UseVisualStyleBackColor = true;
+            this.Day41Btn.Click += new System.EventHandler(this.Day41Btn_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
+            this.Controls.Add(this.Day42Btn);
+            this.Controls.Add(this.Day41Btn);
             this.Controls.Add(this.Day32Btn);
             this.Controls.Add(this.Day31Btn);
             this.Controls.Add(this.Day22btn);
@@ -172,6 +197,8 @@
         private System.Windows.Forms.Button Day21Btn;
         private System.Windows.Forms.Button Day32Btn;
         private System.Windows.Forms.Button Day31Btn;
+        private System.Windows.Forms.Button Day42Btn;
+        private System.Windows.Forms.Button Day41Btn;
     }
 }
 
