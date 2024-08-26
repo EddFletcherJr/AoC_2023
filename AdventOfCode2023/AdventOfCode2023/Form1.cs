@@ -40,8 +40,8 @@ namespace AdventOfCode2023
 
                     if (matches.Count > 0)
                     {
-                        int.TryParse(matches[0].Value.Substring(0,1), out firstInt);
-                        int.TryParse(matches[matches.Count - 1].Value.Substring(matches[matches.Count - 1].Value.Length - 1,1), out lastInt);
+                        int.TryParse(matches[0].Value.Substring(0, 1), out firstInt);
+                        int.TryParse(matches[matches.Count - 1].Value.Substring(matches[matches.Count - 1].Value.Length - 1, 1), out lastInt);
 
                         int.TryParse(firstInt.ToString() + lastInt.ToString(), out combinedInt);
                         total += combinedInt;
@@ -114,14 +114,14 @@ namespace AdventOfCode2023
                     int firstInt = 0;
                     int lastInt = 0;
 
-                    if(matches.Count() > 0)
+                    if (matches.Count() > 0)
                     {
                         matches.Sort((t1, t2) => t1.Item3.CompareTo(t2.Item3));
                         int.TryParse(matches[0].Item2, out firstInt);
                         int.TryParse(matches[matches.Count - 1].Item2, out lastInt);
 
                         int sum = 0;
-                        int.TryParse(firstInt.ToString().Substring(0,1) + (lastInt % 10).ToString(), out sum);
+                        int.TryParse(firstInt.ToString().Substring(0, 1) + (lastInt % 10).ToString(), out sum);
 
                         total += sum;
 
@@ -235,7 +235,7 @@ namespace AdventOfCode2023
 
             public void SetValid(int redLimit, int blueLimit, int greenLimit)
             {
-                if(redCount >= 0 && blueCount >= 0 && greenCount >= 0)
+                if (redCount >= 0 && blueCount >= 0 && greenCount >= 0)
                 {
                     if (redCount <= redLimit && blueCount <= blueLimit && greenCount <= greenLimit)
                         valid = true;
@@ -322,10 +322,10 @@ namespace AdventOfCode2023
 
             String input = InputTxtbox.Text;
             OutputTxtBox.Text = "";
-            
+
             //<symbol or number, x, y>
-            List<Tuple<String,int,int>> symbols = new List<Tuple<String, int, int>>();
-            List<Tuple<String, int,int>> numbers = new List<Tuple<String, int, int>>();
+            List<Tuple<String, int, int>> symbols = new List<Tuple<String, int, int>>();
+            List<Tuple<String, int, int>> numbers = new List<Tuple<String, int, int>>();
             String curNum = "";
             int i_num = -1;
             int j_num = -1;
@@ -337,7 +337,7 @@ namespace AdventOfCode2023
                 //search input and store x,y indexes of everything that is not a number or "."
                 String[] lines = input.Split('\n');
 
-                for(int i = 0; i < lines.Length; i++)
+                for (int i = 0; i < lines.Length; i++)
                 {
                     String curLine = lines[i];
                     for (int j = 0; j < curLine.Length; j++)
@@ -345,7 +345,7 @@ namespace AdventOfCode2023
                         char curChar = curLine[j];
 
                         //if it is symbol
-                        if(Regex.IsMatch(curChar.ToString(), @"[^\d]"))
+                        if (Regex.IsMatch(curChar.ToString(), @"[^\d]"))
                         {
                             if (curNum != "")
                             {
@@ -354,7 +354,7 @@ namespace AdventOfCode2023
                                 j_num = -1;
                                 curNum = "";
                             }
-                            if(curChar != '.')
+                            if (curChar != '.')
                                 symbols.Add(new Tuple<string, int, int>(curChar.ToString(), i, j));
                         }
                         //if it is a number
@@ -394,7 +394,7 @@ namespace AdventOfCode2023
 
                         if (Math.Abs(numX - symX) <= 1)
                         {
-                            for(int i = 0; i < numLength; i++)
+                            for (int i = 0; i < numLength; i++)
                             {
                                 if (Math.Abs(numY + i - symY) <= 1)
                                 {
@@ -501,10 +501,10 @@ namespace AdventOfCode2023
                             {
                                 if (Math.Abs(numY + i - symY) <= 1)
                                 {
-                                    if(adjacentNum1 == -1) adjacentNum1 = int.Parse(number.Item1);
-                                    else if(adjacentNum2 == -1) adjacentNum2 = int.Parse(number.Item1);
+                                    if (adjacentNum1 == -1) adjacentNum1 = int.Parse(number.Item1);
+                                    else if (adjacentNum2 == -1) adjacentNum2 = int.Parse(number.Item1);
 
-                                    adjacentCount ++;
+                                    adjacentCount++;
                                     break;
                                 }
                             }
@@ -540,12 +540,12 @@ namespace AdventOfCode2023
                 //search input and store x,y indexes of everything that is not a number or "."
                 String[] lines = input.Split('\n');
 
-                foreach(String tmp in lines)
+                foreach (String tmp in lines)
                 {
                     String line = tmp;
                     String[] splitStr = line.Split('|');
                     String[] winningNumbers = splitStr[0].Split(':')[1].Trim().Replace("  ", " ").Split(' ');
-                    String[] cardNumbers = splitStr[1].Trim().Replace("  "," ").Split(' ');
+                    String[] cardNumbers = splitStr[1].Trim().Replace("  ", " ").Split(' ');
                     int cardScore = 0;
 
                     foreach (String number in cardNumbers)
@@ -624,7 +624,7 @@ namespace AdventOfCode2023
                 }
 
                 //loop through cards to see what needs to be copied
-                foreach(Card card in cards)
+                foreach (Card card in cards)
                 {
                     //recursive function needed because of the indeterminate number of nested levels
                     ProcessCardInstances(card, cards);
@@ -654,6 +654,497 @@ namespace AdventOfCode2023
                     ProcessCardInstances(cards[i], cards); // Recursively process child cards
                 }
             }
+        }
+
+        public class SeedMap
+        {
+            public String mapName { get; set; } = "";
+
+            //<destination range start, source range start, range length>
+            public List<Tuple<long, long, long>> entries;
+        }
+
+        public class Seed
+        {
+            public long seedNo;
+            public long soil = -1;
+            public long fertilizer = -1;
+            public long water = -1;
+            public long light = -1;
+            public long temp = -1;
+            public long humidity = -1;
+            public long location = -1;
+        }
+
+        private void Day51Btn_Click(object sender, EventArgs e)
+        {
+            long total = 0;
+
+            String input = InputTxtbox.Text;
+            OutputTxtBox.Text = "";
+
+            if (String.IsNullOrEmpty(input))
+                MessageBox.Show("Input is Missing");
+            else
+            {
+                //search input and store x,y indexes of everything that is not a number or "."
+                String[] lines = input.Split('\n');
+                List<Seed> seeds = new List<Seed>();
+                List<SeedMap> seedMaps = new List<SeedMap>();
+                SeedMap tmpMap = new SeedMap();
+                List<Tuple<long, long, long>> tmpEntries = new List<Tuple<long, long, long>>();
+
+                foreach (String tmp in lines)
+                {
+                    if (tmp.Contains("seeds:"))
+                    {
+                        foreach (long i in tmp.Replace("seeds: ", "").Split(' ').Select(long.Parse))
+                        {
+                            Seed seed = new Seed();
+                            seed.seedNo = i;
+
+                            seeds.Add(seed);
+                        }
+
+                        OutputTxtBox.Text += $"Seeds Stored: {seeds.Count}{Environment.NewLine}";
+                    }
+                    else
+                    {
+                        if (tmp.Contains(":"))
+                        {
+                            if (tmpEntries.Count > 0)
+                            {
+                                tmpMap.entries = tmpEntries;
+                                seedMaps.Add(tmpMap);
+
+                                OutputTxtBox.Text += $"{tmpMap.mapName} Map Stored: {tmpMap.entries.Count}{Environment.NewLine}";
+
+                                tmpMap = new SeedMap();
+                                tmpEntries = new List<Tuple<long, long, long>>();
+                            }
+
+                            tmpMap.mapName = tmp.Replace(" map:", "");
+                        }
+                        else if (tmp != "")
+                        {
+                            String[] tmpArr = tmp.Split(' ');
+                            tmpEntries.Add(new Tuple<long, long, long>(long.Parse(tmpArr[0]), long.Parse(tmpArr[1]), long.Parse(tmpArr[2])));
+                        }
+                    }
+                }
+
+                tmpMap.entries = tmpEntries;
+                seedMaps.Add(tmpMap);
+
+                OutputTxtBox.Text += $"{tmpMap.mapName} Map Stored: {tmpMap.entries.Count}{Environment.NewLine}";
+
+                tmpMap = new SeedMap();
+                tmpEntries = new List<Tuple<long, long, long>>();
+
+                //Find the lowest location number that corresponds to any seed
+                long lowestLoc = -1;
+                foreach (Seed seed in seeds)
+                {
+                    String curMap = "";
+
+                    foreach (SeedMap seedMap in seedMaps)
+                    {
+                        if (curMap == "") curMap = seedMap.mapName;
+                        else if (curMap != "" && curMap != seedMap.mapName)
+                        {
+                            curMap = seedMap.mapName;
+
+                            if (seed.soil == -1 && curMap == "soil-to-fertilizer") seed.soil = seed.seedNo;
+                            if (seed.fertilizer == -1 && curMap == "fertilizer-to-water") seed.fertilizer = seed.soil;
+                            if (seed.water == -1 && curMap == "water-to-light") seed.water = seed.fertilizer;
+                            if (seed.light == -1 && curMap == "light-to-temperature") seed.light = seed.water;
+                            if (seed.temp == -1 && curMap == "temperature-to-humidity") seed.temp = seed.light;
+                            if (seed.humidity == -1 && curMap == "humidity-to-location") seed.humidity = seed.temp;
+                        }
+
+                        foreach (Tuple<long, long, long> entry in seedMap.entries)
+                        {
+                            long source = entry.Item2;
+                            long destination = entry.Item1;
+                            long length = entry.Item3;
+
+                            if (seedMap.mapName == "seed-to-soil")
+                            {
+                                if (seed.seedNo >= source && seed.seedNo <= source + length)
+                                {
+                                    seed.soil = destination + (seed.seedNo - source);
+                                    break;
+                                }
+                            }
+                            else if (seedMap.mapName == "soil-to-fertilizer")
+                            {
+                                if (seed.soil >= source && seed.soil <= source + length)
+                                {
+                                    seed.fertilizer = destination + (seed.soil - source);
+                                    break;
+                                }
+                            }
+                            else if (seedMap.mapName == "fertilizer-to-water")
+                            {
+                                if (seed.fertilizer >= source && seed.fertilizer <= source + length)
+                                {
+                                    seed.water = destination + (seed.fertilizer - source);
+                                    break;
+                                }
+                            }
+                            else if (seedMap.mapName == "water-to-light")
+                            {
+                                if (seed.water >= source && seed.water <= source + length)
+                                {
+                                    seed.light = destination + (seed.water - source);
+                                    break;
+                                }
+                            }
+                            else if (seedMap.mapName == "light-to-temperature")
+                            {
+                                if (seed.light >= source && seed.light <= source + length)
+                                {
+                                    seed.temp = destination + (seed.light - source);
+                                    break;
+                                }
+                            }
+                            else if (seedMap.mapName == "temperature-to-humidity")
+                            {
+                                if (seed.temp >= source && seed.temp <= source + length)
+                                {
+                                    seed.humidity = destination + (seed.temp - source);
+                                    break;
+                                }
+                            }
+                            else if (seedMap.mapName == "humidity-to-location")
+                            {
+                                if (seed.humidity >= source && seed.humidity <= source + length)
+                                {
+                                    seed.location = destination + (seed.humidity - source);
+
+                                    if (lowestLoc == -1) lowestLoc = seed.location;
+                                    else if (lowestLoc > seed.location) lowestLoc = seed.location;
+
+                                    break;
+                                }
+                            }
+                        }
+                    }
+
+                    if (seed.location == -1) seed.location = seed.humidity;
+
+                    if (lowestLoc == -1) lowestLoc = seed.location;
+                    else if (lowestLoc > seed.location) lowestLoc = seed.location;
+
+                    total = lowestLoc;
+                }
+                OutputTxtBox.Text += $"Output: {total}";
+            }
+
+            OutputTxtBox.SelectionStart = OutputTxtBox.Text.Length;
+            OutputTxtBox.ScrollToCaret();
+
+            MessageBox.Show($"Finished: {total}");
+        }
+
+        private void Day52Btn_Click(object sender, EventArgs e)
+        {
+            long total = 0;
+
+            String input = InputTxtbox.Text;
+            OutputTxtBox.Text = "";
+
+            if (String.IsNullOrEmpty(input))
+                MessageBox.Show("Input is Missing");
+            else
+            {
+                //search input and store x,y indexes of everything that is not a number or "."
+                String[] lines = input.Split('\n');
+                List<Seed> seeds = new List<Seed>();
+                List<SeedMap> seedMaps = new List<SeedMap>();
+                SeedMap tmpMap = new SeedMap();
+                List<Tuple<long, long, long>> tmpEntries = new List<Tuple<long, long, long>>();
+
+                foreach (String tmp in lines)
+                {
+                    if (tmp.Contains("seeds:"))
+                    {
+                        long[] seedList = tmp.Replace("seeds: ", "").Split(' ').Select(long.Parse).ToArray();
+
+                        for (long i = 0; i < seedList.Length; i++)
+                        {
+                            if ((i + 1) % 2 == 0)
+                            {
+                                long ctr = 0;
+
+                                while (ctr < seedList[i])
+                                {
+                                    Seed seed = new Seed();
+                                    seed.seedNo = seedList[i - 1] + ctr;
+                                    seeds.Add(seed);
+
+                                    ctr++;
+                                }
+                            }
+                        }
+
+                        OutputTxtBox.Text += $"Seeds Stored: {seeds.Count}{Environment.NewLine}";
+                    }
+                    else
+                    {
+                        if (tmp.Contains(":"))
+                        {
+                            if (tmpEntries.Count > 0)
+                            {
+                                tmpMap.entries = tmpEntries;
+                                seedMaps.Add(tmpMap);
+
+                                OutputTxtBox.Text += $"{tmpMap.mapName} Map Stored: {tmpMap.entries.Count}{Environment.NewLine}";
+
+                                tmpMap = new SeedMap();
+                                tmpEntries = new List<Tuple<long, long, long>>();
+                            }
+
+                            tmpMap.mapName = tmp.Replace(" map:", "");
+                        }
+                        else if (tmp != "")
+                        {
+                            String[] tmpArr = tmp.Split(' ');
+                            tmpEntries.Add(new Tuple<long, long, long>(long.Parse(tmpArr[0]), long.Parse(tmpArr[1]), long.Parse(tmpArr[2])));
+                        }
+                    }
+                }
+
+                tmpMap.entries = tmpEntries;
+                seedMaps.Add(tmpMap);
+
+                OutputTxtBox.Text += $"{tmpMap.mapName} Map Stored: {tmpMap.entries.Count}{Environment.NewLine}";
+
+                tmpMap = new SeedMap();
+                tmpEntries = new List<Tuple<long, long, long>>();
+
+                //Find the lowest location number that corresponds to any seed
+                long lowestLoc = -1;
+                foreach (Seed seed in seeds)
+                {
+                    String curMap = "";
+
+                    foreach (SeedMap seedMap in seedMaps)
+                    {
+                        if (curMap == "") curMap = seedMap.mapName;
+                        else if (curMap != "" && curMap != seedMap.mapName)
+                        {
+                            curMap = seedMap.mapName;
+
+                            if (seed.soil == -1 && curMap == "soil-to-fertilizer") seed.soil = seed.seedNo;
+                            if (seed.fertilizer == -1 && curMap == "fertilizer-to-water") seed.fertilizer = seed.soil;
+                            if (seed.water == -1 && curMap == "water-to-light") seed.water = seed.fertilizer;
+                            if (seed.light == -1 && curMap == "light-to-temperature") seed.light = seed.water;
+                            if (seed.temp == -1 && curMap == "temperature-to-humidity") seed.temp = seed.light;
+                            if (seed.humidity == -1 && curMap == "humidity-to-location") seed.humidity = seed.temp;
+                        }
+
+                        foreach (Tuple<long, long, long> entry in seedMap.entries)
+                        {
+                            long source = entry.Item2;
+                            long destination = entry.Item1;
+                            long length = entry.Item3;
+
+                            if (seedMap.mapName == "seed-to-soil")
+                            {
+                                if (seed.seedNo >= source && seed.seedNo <= source + length)
+                                {
+                                    seed.soil = destination + (seed.seedNo - source);
+                                    break;
+                                }
+                            }
+                            else if (seedMap.mapName == "soil-to-fertilizer")
+                            {
+                                if (seed.soil >= source && seed.soil <= source + length)
+                                {
+                                    seed.fertilizer = destination + (seed.soil - source);
+                                    break;
+                                }
+                            }
+                            else if (seedMap.mapName == "fertilizer-to-water")
+                            {
+                                if (seed.fertilizer >= source && seed.fertilizer <= source + length)
+                                {
+                                    seed.water = destination + (seed.fertilizer - source);
+                                    break;
+                                }
+                            }
+                            else if (seedMap.mapName == "water-to-light")
+                            {
+                                if (seed.water >= source && seed.water <= source + length)
+                                {
+                                    seed.light = destination + (seed.water - source);
+                                    break;
+                                }
+                            }
+                            else if (seedMap.mapName == "light-to-temperature")
+                            {
+                                if (seed.light >= source && seed.light <= source + length)
+                                {
+                                    seed.temp = destination + (seed.light - source);
+                                    break;
+                                }
+                            }
+                            else if (seedMap.mapName == "temperature-to-humidity")
+                            {
+                                if (seed.temp >= source && seed.temp <= source + length)
+                                {
+                                    seed.humidity = destination + (seed.temp - source);
+                                    break;
+                                }
+                            }
+                            else if (seedMap.mapName == "humidity-to-location")
+                            {
+                                if (seed.humidity >= source && seed.humidity <= source + length)
+                                {
+                                    seed.location = destination + (seed.humidity - source);
+
+                                    if (lowestLoc == -1) lowestLoc = seed.location;
+                                    else if (lowestLoc > seed.location) lowestLoc = seed.location;
+
+                                    break;
+                                }
+                            }
+                        }
+                    }
+
+                    if (seed.location == -1) seed.location = seed.humidity;
+
+                    if (lowestLoc == -1) lowestLoc = seed.location;
+                    else if (lowestLoc > seed.location) lowestLoc = seed.location;
+
+                    total = lowestLoc;
+                }
+                OutputTxtBox.Text += $"Output: {total}";
+            }
+
+            OutputTxtBox.SelectionStart = OutputTxtBox.Text.Length;
+            OutputTxtBox.ScrollToCaret();
+
+            MessageBox.Show($"Finished: {total}");
+        }
+
+        private void Day61Btn_Click(object sender, EventArgs e)
+        {
+            int total = 0;
+
+            String input = InputTxtbox.Text;
+            OutputTxtBox.Text = "";
+
+            if (String.IsNullOrEmpty(input))
+                MessageBox.Show("Input is Missing");
+            else
+            {
+                //search input and store x,y indexes of everything that is not a number or "."
+                String[] lines = input.Split('\n');
+                List<int> times = new List<int>();
+                List<int> distances = new List<int>();
+                List<int> winCount = new List<int>();
+
+                foreach (String tmp in lines)
+                {
+                    if (tmp.Contains("Time"))
+                    {
+                        foreach (String s in tmp.Replace("Time:", "").Trim().Split(' '))
+                            if (s != " " && s != "")
+                            {
+                                times.Add(int.Parse(s));
+                                winCount.Add(0);
+                            }
+                    }
+                    else if (tmp.Contains("Distance"))
+                    {
+                        foreach (String s2 in tmp.Replace("Distance:", "").Trim().Split(' '))
+                            if (s2 != " " && s2 != "")
+                                distances.Add(int.Parse(s2));
+                    }
+                }
+
+                //find the number of ways to win based on how long we charge
+                for(int i = 0; i < times.Count; i++)
+                {
+                    for(int j = 0; j < times[i]; j++)
+                    {
+                        if (j * (times[i] - j) > distances[i])
+                            winCount[i]++;
+                        else if (winCount[i] > 0)
+                            break;
+                    }
+                }
+
+                total = winCount.Aggregate(1, (acc, x) => acc * x);
+            }
+
+            OutputTxtBox.Text += $"Result: {total.ToString()}";
+
+            OutputTxtBox.SelectionStart = OutputTxtBox.Text.Length;
+            OutputTxtBox.ScrollToCaret();
+
+            MessageBox.Show($"Finished: {total}");
+        }
+
+        private void Day62Btn_Click(object sender, EventArgs e)
+        {
+            long total = 0;
+
+            String input = InputTxtbox.Text;
+            OutputTxtBox.Text = "";
+
+            if (String.IsNullOrEmpty(input))
+                MessageBox.Show("Input is Missing");
+            else
+            {
+                //search input and store x,y indexes of everything that is not a number or "."
+                String[] lines = input.Split('\n');
+                List<long> times = new List<long>();
+                List<long> distances = new List<long>();
+                List<long> winCount = new List<long>();
+
+                foreach (String tmp in lines)
+                {
+                    if (tmp.Contains("Time"))
+                    {
+                        foreach (String s in tmp.Replace("Time:", "").Replace(" ","").Trim().Split(' '))
+                            if (s != " " && s != "")
+                            {
+                                times.Add(long.Parse(s));
+                                winCount.Add(0);
+                            }
+                    }
+                    else if (tmp.Contains("Distance"))
+                    {
+                        foreach (String s2 in tmp.Replace("Distance:", "").Replace(" ", "").Trim().Split(' '))
+                            if (s2 != " " && s2 != "")
+                                distances.Add(long.Parse(s2));
+                    }
+                }
+
+                //find the number of ways to win based on how long we charge
+                for (int i = 0; i < times.Count; i++)
+                {
+                    for (int j = 0; j < times[i]; j++)
+                    {
+                        if (j * (times[i] - j) > distances[i])
+                            winCount[i]++;
+                        else if (winCount[i] > 0)
+                            break;
+                    }
+                }
+
+                total = winCount.Aggregate(1L, (acc, x) => acc * x);
+            }
+
+            OutputTxtBox.Text += $"Result: {total.ToString()}";
+
+            OutputTxtBox.SelectionStart = OutputTxtBox.Text.Length;
+            OutputTxtBox.ScrollToCaret();
+
+            MessageBox.Show($"Finished: {total}");
         }
     }
 }
